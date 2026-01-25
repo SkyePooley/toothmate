@@ -28,7 +28,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Allow connections from the client or localhost. All others blocked.
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://oversky.net.nz:5005', 'http://oversky.net.nz:3000'],
+  origin: [
+      'http://localhost:3000', 'http://127.0.0.1:3000',
+      'http://170.64.242.49:3000', 'http://170.64.242.49:80', 'http://170.64.242.49:443',
+      'http://toothmate.co.nz:80'],
   credentials: true
 }));
 
@@ -49,7 +52,6 @@ app.use('/api', xrayRouter);
 app.use('/api', patientRouter);
 app.use('/api', historyRouter);
 app.use('/api', cautionRouter);
-app.use('/api', teethRouter);
 app.use('/autofill', autofillRouter);
 
 // Start the server
