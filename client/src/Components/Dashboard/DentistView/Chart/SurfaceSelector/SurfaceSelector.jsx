@@ -9,7 +9,16 @@ import { useEffect } from "react";
  */
 export default function SurfaceSelector({ selectedSurfaces, setSelectedSurfaces, selectedTooth }) {
     const [topFaceName, setTopFaceName] = useState("incisal");
-    const [topFaceLabel, setTopFaceLabel] = useState("I")
+    const [topFaceLabel, setTopFaceLabel] = useState("I");
+
+    const [upperFaceName, setUpperFaceName] = useState("incisal");
+    const [upperFaceLabel, setUpperFaceLabel] = useState("I");
+
+    const [leftFaceName, setLeftFaceName] = useState("distal");
+    const [leftFaceLabel, setLeftFaceLabel] = useState("D");
+
+    const [rightFaceName, setRightFaceName] = useState("mesial");
+    const [rightFaceLabel, setRightFaceLabel] = useState("M");
 
     // Select / deselect clicked surfaces
     function handleSurfaceSelected(surface) {
@@ -26,7 +35,8 @@ export default function SurfaceSelector({ selectedSurfaces, setSelectedSurfaces,
 
     // Change between incisal and occlusal when molars/incisors are selected
     useEffect(() => {
-        if (selectedTooth[3] < 5) {
+        // Fore or aft
+        if (selectedTooth[3] < 4) {
             setTopFaceLabel("I")
             setTopFaceName("incisal")
             setSelectedSurfaces(selectedSurfaces.filter(s => s !== "occlusal"))
@@ -35,6 +45,30 @@ export default function SurfaceSelector({ selectedSurfaces, setSelectedSurfaces,
             setTopFaceLabel("O")
             setTopFaceName("occlusal")
             setSelectedSurfaces(selectedSurfaces.filter(s => s !== "incisal"))
+        }
+
+        // Left or right
+        if (['1', '4', '5', '8'].includes(selectedTooth[2])) {
+            setLeftFaceLabel('D');
+            setLeftFaceName('distal');
+            setRightFaceLabel('M');
+            setRightFaceName('mesial');
+        }
+        else {
+            setLeftFaceLabel('M');
+            setLeftFaceName('mesial');
+            setRightFaceLabel('D');
+            setRightFaceName('distal');
+        }
+
+        // Top or bottom
+        if (['1', '2', '5', '6'].includes(selectedTooth[2])) {
+            setUpperFaceName('palatal');
+            setUpperFaceLabel('P');
+        }
+        else {
+            setUpperFaceName('lingual');
+            setUpperFaceLabel('L');
         }
     }, [selectedTooth]);
 
@@ -49,11 +83,11 @@ export default function SurfaceSelector({ selectedSurfaces, setSelectedSurfaces,
                         const row = Math.floor(index / 5);
                         const col = index % 5;
                         const realButtons = {
-                            '1-2': { id: "mesial", label: "M" },
-                            '2-1': { id: "facial", label: "F" },
+                            '1-2': { id: upperFaceName, label: upperFaceLabel },
+                            '2-1': { id: leftFaceName, label: leftFaceLabel },
                             '2-2': { id: topFaceName, label: topFaceLabel },
-                            '2-3': { id: "lingual", label: "L" },
-                            '3-2': { id: "distal", label: "D" }
+                            '2-3': { id: rightFaceName, label: rightFaceLabel },
+                            '3-2': { id: "buccal", label: "B" }
                         };
 
                         const key = `${row}-${col}`;
