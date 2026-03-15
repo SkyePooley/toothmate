@@ -19,15 +19,15 @@ export default function Login() {
             className="flex items-center justify-center min-h-screen background-gradient"
         >
             <div className="flex items-center space-x-2 pr-8 justify-center">
-                <img src='logo.svg' style={{height: '70px', marginRight: "15px"}} />
+                <img src='/logo.svg' style={{height: '70px', marginRight: "15px"}} />
                 <div>
                     <div className="flex">
                         <div className="text-logo-purple font-extrabold text-6xl">ToothMate</div>
                         <div className="text-logo-dark-purple font-extrabold text-6xl">Pro</div>
                     </div>
-                    <div>
-                        <span className="ml-2 font-bold">KidCare Dental</span>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <span className="ml-2 font-bold">KidCare Dental</span>*/}
+                    {/*</div>*/}
                 </div>
             </div>
 

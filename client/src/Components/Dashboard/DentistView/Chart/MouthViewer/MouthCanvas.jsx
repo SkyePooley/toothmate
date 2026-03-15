@@ -190,7 +190,7 @@ export default function MouthCanvas({ selectedTooth, onMeshClick, patient, treat
             const toothName = tooth.name.substring(0, 4);
 
             // Prioritise showing selection over showing treatments.
-            if (selectedTooth && selectedTooth == toothName) {
+            if (selectedTooth && selectedTooth === toothName) {
                 if (blueMaterial && tooth.material !== blueMaterial) {
                     tooth.material = blueMaterial;
                     return;
@@ -233,7 +233,7 @@ export default function MouthCanvas({ selectedTooth, onMeshClick, patient, treat
                 }
             } else {
                 // Restore original material if has no treatments and is not selected.
-                if ((tooth.material !== originalMat) && !(selectedTooth && selectedTooth == toothName)) {
+                if ((tooth.material !== originalMat) && !(selectedTooth && selectedTooth === toothName)) {
 
                     tooth.material = originalMat;
                 }
@@ -277,7 +277,7 @@ export default function MouthCanvas({ selectedTooth, onMeshClick, patient, treat
         if (event.object.isMesh && event.object.name) {
             const meshName = event.object.name
             // Disallow selection of the jaws
-            if (meshName == "upper_jaw" || meshName == "lower_jaw") {
+            if (meshName === "upper_jaw" || meshName === "lower_jaw") {
                 return;
             }
             // Blender 3D models dont allow meshes with duplicate names.

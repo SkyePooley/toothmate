@@ -53,7 +53,7 @@ export default function MouthManager({patient, onToothSelected}) {
 
     // Select / Deselect teeth when clicked.
     const handleMeshClick = (meshName) => {
-        if (selectedTooth == meshName) {
+        if (selectedTooth === meshName) {
             setToothSelection(null);
         }
         else {
@@ -63,7 +63,7 @@ export default function MouthManager({patient, onToothSelected}) {
 
     function handleViewChanged(newView) {
         setView(newView);
-        setIs3DView(newView == "mouth");
+        setIs3DView(newView === "mouth");
         resetView();
     }
 
@@ -95,30 +95,34 @@ export default function MouthManager({patient, onToothSelected}) {
         let col = getSelectedRowCol(selectedTooth).col;
 
         const decRow = () => {
-            if (row > 1) { row-- }
-            else {
+            if (row === '1') {
                 row = 4;
+            }
+            else if (row === '5') {
+                row = 8;
+            }
+            else {
+                row--;
             }
         }
 
         const incRow = () => {
-            if (row < 4) {
-                row ++;
-            } else {
-                row = 1;
-            }
+            if (row === '4') { row = 1; }
+            else if (row === '8') { row = 5; }
+            else { row++;}
         }
 
         const decCol = () => {
             if (col > 1) { col--; }
             else {
                 decRow();
-                col = 8;
+                if (row > 4) { col = 5; }
+                else { col = 8; }
             }
         }
 
         const incCol = () => {
-            if (col < 8) { col++; }
+            if ((row < 5 && col < 8) || (row > 4 && col < 5)) { col++; }
             else {
                 incRow();
                 col = 1;
@@ -147,7 +151,7 @@ export default function MouthManager({patient, onToothSelected}) {
         tabIndex={0} // Makes div focusable. Required to enable keypress capture.
         style={{ position: 'relative', height: '785px', width: '100%' }}>
             <div style={showOptions ? {height: '60%'} : {height: '93%'}}>
-                {view!="xray" ?
+                {view!=="xray" ?
                 <Canvas 
                     key={is3DView ? '3d' : 'ortho'} // Force remount on view change
                     style={{ height: '100%', width: '100%' }}
