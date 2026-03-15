@@ -16,6 +16,13 @@ export default function ToothCanvas({selectedTooth}) {
     
     const { scene } = useGLTF("/assets/3DModels/CompressedAdultTeeth/all-teeth.glb");
 
+    const translateTooth = (toothName) => {
+        let row = Number(toothName[2]);
+        let col = toothName[3];
+        if (row > 4) { row -= 4;}
+        return `t_${row}${col}`;
+    }
+
     useEffect(() => {
         scene.traverse((child) => {
             if (child.isMesh && child.name) { // Ensure it's a mesh and has a name
@@ -23,7 +30,7 @@ export default function ToothCanvas({selectedTooth}) {
             }
         })
 
-        const visibleTooth = scene.getObjectByName(selectedTooth)
+        const visibleTooth = scene.getObjectByName(translateTooth(selectedTooth))
         if (visibleTooth) { visibleTooth.visible = true; }
     }, [selectedTooth, scene])
 
